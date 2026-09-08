@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Keep build output out of the module directory, since sourceSets below scans it flat/recursively
+// for .java files and would otherwise pick up its own generated sources (R.java, BuildConfig.java).
+layout.buildDirectory.set(rootProject.layout.buildDirectory.dir('app'))
+
+android {
+    namespace 'dev.twaik.adbtcpip'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'dev.twaik.adbtcpip'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // No src/main/... nesting: manifest, .java sources and res live flat in the module root.
+    sourceSets {
+        main.manifest.srcFile 'AndroidManifest.xml'
+        main.java.srcDirs = ['.']
+        main.res.srcDirs = ['res']
+    }
+}
